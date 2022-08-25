@@ -1,4 +1,5 @@
-import axios from "axios";
+
+import axiosApi from "../../axiosApi";
 
 export const FETCH_MESSAGES_REQUEST = 'FETCH_MESSAGES_REQUEST';
 export const FETCH_MESSAGES_SUCCESS = 'FETCH_MESSAGES_SUCCESS';
@@ -20,20 +21,19 @@ export const fetchMessages = () => {
     return async dispatch => {
         try {
             dispatch(fetchMessagesRequest());
-            const response = await axios.get('http://localhost:8000/messages');
+            const response = await axiosApi.get('/messages');
+            console.log(response.data[0].id);
             dispatch(fetchMessagesSuccess(response.data));
         } catch (e) {
             dispatch(fetchMessagesFailure());
         }
     };
 };
-
-
 export const createMessage = messageData => {
     return async dispatch => {
         try {
             dispatch(createMessageRequest());
-            await axios.post('http://localhost:8000/messages', messageData);
+            await axiosApi.post('/messages', messageData);
 
             dispatch(createMessageSuccess());
         } catch (e) {
