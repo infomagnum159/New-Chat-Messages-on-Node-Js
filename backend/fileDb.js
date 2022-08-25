@@ -1,29 +1,39 @@
-const fs = require("fs");
-const {uniqId} = require("uniqid");
-const moment = require("moment");
+const fs = require('fs');
+const uniqId = require('uniqid');
 
-const fileName = "./messagesServer.json";
+const filename = './messagesServer.json';
 let data = [];
 
 module.exports = {
   init() {
-    try{
-      data = JSON.parse(fs.readFileSync(fileName));
+    try {
+      const fileContents = fs.readFileSync(filename);
+      data = JSON.parse(fileContents);
+
     } catch (e) {
       data = [];
     }
   },
-  getItems() {
+  getMessages() {
+    return data;
+  },
+  addMessage(mess) {
+    mess.id = uniqId();
+    mess.datetime = new Date().toISOString();
+    data.push(mess);
+    this.save();
+  },
+  eraseMessages() {
+    data = [];
+    this.save();
     return data;
   },
   save() {
-    fs.writeFileSync(fileName, JSON.stringify(data));
+    console.log('file was saved');
+    fs.writeFileSync(filename, JSON.stringify(data));
   },
-  addItem(item) {
-    item.id = uniqId;
-    item.data = moment().format('MMMM Do YYYY, h:mm:ss a');
-    data.push(item);
-    this.save();
-    return item;
+  add(data) {
+    fs.appendFileSync(filename, JSON.stringify(data));
   }
+
 };

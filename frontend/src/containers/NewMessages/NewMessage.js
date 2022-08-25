@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch} from "react-redux";
 import InputForm from "../../components/InputForm/InputForm";
-import {createMessage} from "../../store/actions/MessageAction";
+import {createMessage, fetchMessages} from "../../store/actions/MessageAction";
 import {Typography} from "@mui/material";
 
 const NewMessage = ({history}) => {
@@ -9,6 +9,7 @@ const NewMessage = ({history}) => {
 
     const onSubmit = async messageData => {
         await dispatch(createMessage(messageData));
+        await dispatch(fetchMessages())
         history.replace('/');
     };
 

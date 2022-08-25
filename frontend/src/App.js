@@ -1,17 +1,17 @@
-import React from 'react';
-import Layout from "./components/Layout/Layout";
-import {Switch, Route} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
+import NewMessage from "./containers/NewMessages/NewMessage";
 import Messages from "./containers/Messages/Messages";
-import NewMessages from "./containers/NewMessage/NewMessages";
+import Layout from "./components/UI/Layout/Layout";
 
 const App = () => (
-    <Layout>
-      <Switch>
-        <Route path="/" exact component={Messages}/>
-        <Route path="/add-post" exact component={NewMessages}/>
-        <Route render={() => <h1>404 Not Found</h1>}/>
-      </Switch>
-    </Layout>
+    <>
+        <Layout>
+        <Switch>
+            <Route path="/" exact component={Messages}/>
+            <Route path="/message/new" component={NewMessage}/>
+        </Switch>
+        </Layout>
+    </>
 );
 
 export default App;
